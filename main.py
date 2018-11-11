@@ -1,6 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox
 
+import matplotlib.pyplot as plt
+import pandas as pd
+import pandas_datareader.data as stock_info
+
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 class Program(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -41,8 +48,7 @@ class MainPage(tk.Frame):
         button_school.place(x=400, y=0, width=400, height=600)
     
     def alert(self, text):
-        messagebox.showinfo('Teavitus', message=text)
-
+        messagebox.showinfo("Teavitus", message=text)
 
 class Finance(tk.Frame):
 
@@ -50,8 +56,27 @@ class Finance(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
+
         button_back = tk.Button(self, text="Avalehele", command=lambda: controller.show_frame("MainPage"))
         button_back.place(x=0, y=0)
+        
+        stock_lable = tk.Label(self, text="Aktsia sümbol")
+        stock_lable.place(x=100, y=60)
+        self.stock = tk.Entry(self)
+        self.stock.place(x=100, y=80)
+        
+        button_stock = tk.Button(self, text="Graafik", command=lambda: self.show_stock())
+        button_stock.place(x=100, y=110)
+        
+    def show_stock(self):
+    
+        try:
+            data = stock_info.DataReader(self.stock.get(), "yahoo")
+            data["Adj Close"].plot()
+            plt.title(self.stock.get())
+            plt.show()
+        except:
+            messagebox.showinfo("Teavitus", "Sellist sümbolit ei leitud!")
 
 class School(tk.Frame):
     def __init__(self, parent, controller):
