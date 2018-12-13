@@ -14,7 +14,7 @@ class Program(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         
-        self.title("Projekt")
+        self.title("MoneyProgram2000")
         self.geometry("800x600")
         
         container = tk.Frame(self)
@@ -23,18 +23,45 @@ class Program(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for FRAME in (MainPage, Stocks, MoneyData):
+        for FRAME in (LogIn, MainPage, Stocks, MoneyData):
             page_name = FRAME.__name__
             frame = FRAME(parent=container, controller=self)
             self.frames[page_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("MainPage")
+        self.show_frame("LogIn")
 
     def show_frame(self, page_name):
         frame = self.frames[page_name]
         frame.tkraise()
+        
+class LogIn(tk.Frame):
+    
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        
+        self.us = tk.Entry(self, width=20)
+        self.pw = tk.Entry(self, width=20, show="*")
 
+        self.us.place(relx = 0.5, rely = 0.40, anchor=tk.CENTER)
+        self.pw.place(relx = 0.5, rely = 0.5, anchor=tk.CENTER)
+        
+        tk.Label(self, text="MoneyProgram2000",font=("Tahoma", 26)).place(relx = 0.5, rely = 0.2, anchor=tk.CENTER)    
+        
+        tk.Label(self, text="Kasutajanimi").place(relx = 0.5, rely = 0.35, anchor=tk.CENTER)
+        tk.Label(self, text="Parool",).place(relx = 0.5, rely = 0.45, anchor=tk.CENTER)
+        
+        tk.Button(self, text="Sisene", command=self.login).place(relx = 0.5, rely = 0.57, anchor=tk.CENTER) 
+        
+
+    def login(self):
+        if ((self.us.get() == 'admin') and (self.pw.get() == 'admin')):
+            self.controller.show_frame("MainPage")
+        else:
+            self.pw.delete(0,'end')
+            messagebox.showinfo("VIGA!", "Vigane kasutajanimi või parool.\n Proovige uuesti!")
+                
 
 class MainPage(tk.Frame):
 
@@ -75,8 +102,7 @@ class Stocks(tk.Frame):
             t+=25
             button.place(x=100, y=t)
         
-        tk.Label(self, text="Käive").place(x=300, y=60)
-        tk.Button(self, text="Graafik", command=lambda: self.show_stock(self.v.get())).place(x=300, y=80)
+        tk.Button(self, text="Graafik", command=lambda: self.show_stock(self.v.get())).place(x=100, y=230)
         
         
         
@@ -106,7 +132,6 @@ class MoneyData(tk.Frame):
         
         self.e1.grid(row=1, column=1)
         self.e2.grid(row=1, column=3)
-
 
         tk.Button(self, text='Lisa', command=self.add).grid(row=1, column=4, sticky=tk.W)
         tk.Button(self, text='Salvesta andmed', command=self.save).grid(row=1, column=5)
