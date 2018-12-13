@@ -72,6 +72,7 @@ Button(main, text='Lisa', command=add).grid(row=0, column=4, sticky=W)
 Button(main, text='Salvesta andmed', command=save).grid(row=0, column=5)
 
 data = {}
-read_data()
+try: read_data()
+except FileNotFoundError: save()
 
 main.mainloop()
