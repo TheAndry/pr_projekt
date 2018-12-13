@@ -8,6 +8,8 @@ def add():
     if e1.get() != '' and e2.get() != '':
         if is_dig == True:
             data[len(data)+1]=list((e1.get(), e2.get()))
+            e1.delete(0, 'end')
+            e2.delete(0, 'end')
             tabel(data)
         else:
             e1.delete(0, 'end')
