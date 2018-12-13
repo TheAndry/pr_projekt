@@ -3,8 +3,10 @@ from tkinter import messagebox
 import csv
 
 def add():
+    try: int(e1.get());is_dig=True
+    except ValueError: is_dig=False
     if e1.get() != '' and e2.get() != '':
-        if e1.get().isdigit() == True:
+        if is_dig == True:
             data[len(data)+1]=list((e1.get(), e2.get()))
             tabel(data)
         else:
