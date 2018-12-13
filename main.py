@@ -61,19 +61,30 @@ class Stocks(tk.Frame):
         button_back = tk.Button(self, text="Avalehele", command=lambda: controller.show_frame("MainPage"))
         button_back.place(x=0, y=0)
         
-        stock_lable = tk.Label(self, text="Aktsia sümbol")
-        stock_lable.place(x=100, y=60)
+        tk.Label(self, text="Aktsia sümbol").place(x=100, y=60)
         self.stock = tk.Entry(self)
         self.stock.place(x=100, y=80)
         
-        button_stock = tk.Button(self, text="Graafik", command=lambda: self.show_stock())
-        button_stock.place(x=100, y=110)
+        graph_types = [("Kõrgeim hind", "High"),("Madalaim hind", "Low"),("Käive", "Volume"),("Sulgemishind", "Adj Close")]
+        self.v = tk.StringVar()
+        self.v.set("Adj Close")
+        t = 90
+        for text,val in graph_types:
+            button = tk.Radiobutton(self, text=text,variable=self.v, value=val)
+            button.pack(anchor=tk.W)
+            t+=25
+            button.place(x=100, y=t)
         
-    def show_stock(self):
+        tk.Label(self, text="Käive").place(x=300, y=60)
+        tk.Button(self, text="Graafik", command=lambda: self.show_stock(self.v.get())).place(x=300, y=80)
+        
+        
+        
+    def show_stock(self, type):
     
         try:
             data = stock_info.DataReader(self.stock.get(), "yahoo")
-            data["Adj Close"].plot()
+            data[type].plot()
             plt.title(self.stock.get())
             plt.show()
         except:
@@ -117,9 +128,9 @@ class MoneyData(tk.Frame):
                 self.tabel(self.data)
             else:
                 self.e1.delete(0, 'end')
-                return messagebox.showinfo("Teavitus", "Palun sisestage rahavoo lahtrisse aind numbreid")
+                messagebox.showinfo("Teavitus", "Palun sisestage rahavoo lahtrisse aind numbreid")
         else:
-            return messagebox.showinfo("Teavitus", "Palun täitke mõlemad lahtrid :)")
+            messagebox.showinfo("Teavitus", "Palun täitke mõlemad lahtrid :)")
 
     def save(self):
         w = csv.DictWriter(open("raha_data.csv","w"), ['nr','summa','kirjeldus'])
