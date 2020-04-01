@@ -1,0 +1,87 @@
+.container-fluid {
+  padding: 0;
+}
+
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.site-title {
+  text-align: center;
+  background-color: #ba4c4c;
+  color: white;
+}
+
+.site-title h1 {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+nav {
+  margin-top: -8px;
+  background-color: #fbd5d5;
+  color: black;
+}
+
+.nav-item.active a{
+    font-weight: bold;
+}
+
+
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-nav .nav-link {
+      padding-right: 20px;
+      padding-left: 20px;
+  }
+}
+
+.concerts {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.concert {
+  background-color: #f7f0f0;
+  margin: 20px auto;
+  max-width: 220px;
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.concert h4 {
+  margin-bottom: 20px;
+}
+
+.concert a {
+  padding: 10px;
+  margin: 0 auto;
+  margin-top: 20px;
+  background-color: #fbd5d5;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: block;
+  width: 120px;
+  color: black;
+  font-size: 20px;
+}
+
+footer {
+  background-color: #ba4c4c;
+  color: white;
+  overflow: auto;
+}
+
+footer .info-left {
+  float: left;
+  margin: 20px 40px;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+}
+
+
+footer .info-right {
+  float: right;
+  margin: 10px 40px;
+}
